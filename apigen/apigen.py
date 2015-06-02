@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import json
 import sys
 import signal
+import os
 import argparse
 import inspect
 import pyjsonrpc
@@ -74,7 +75,7 @@ class Definition(object):
             )
             def sigint_handler(signum, frame):
                 #http_server.shutdown() # FIXME why does it block?
-                sys.exit(0)
+                os.killpg(os.getpgid(0), signal.SIGTERM)
             signal.signal(signal.SIGINT, sigint_handler)
             http_server.serve_forever()
 
